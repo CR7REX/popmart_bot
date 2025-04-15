@@ -1,4 +1,4 @@
-# popmart_bot
+# POP MART Bot
 
 ## How to run the code:
 python main.py <product_url> <email> <password>
