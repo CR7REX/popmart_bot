@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import sys
 
-def popmart_bot(product_url):
+def popmart_bot(product_url, email, password):
     
     # Initialize the Chrome driver
     options = uc.ChromeOptions()
@@ -23,7 +23,7 @@ def popmart_bot(product_url):
 
     # Entering email and click continue button
     email_input = driver.find_element(By.ID, "email")
-    email_input.send_keys("turing.vex@gmail.com")
+    email_input.send_keys(email)
     WebDriverWait(driver, 3).until(
         EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'CONTINUE')]"))
     ).click()
@@ -31,7 +31,7 @@ def popmart_bot(product_url):
 
     # Entering password and click sign in button
     password_input = driver.find_element(By.ID, "password")
-    password_input.send_keys("990528Qs")
+    password_input.send_keys(password)
     WebDriverWait(driver, 3).until(
         EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'SIGN IN')]"))
     ).click()
@@ -99,4 +99,6 @@ def popmart_bot(product_url):
 
 if __name__ == "__main__":
     product_url = sys.argv[1]
+    email = sys.argv[2]
+    password = sys.argv[3]
     popmart_bot(product_url)
