@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import sys
 
-def popmart_bot(product_url, email, password):
+def popmart_bot(product_url, email, password, pick_up_location=None):
     
     # Initialize the Chrome driver
     options = uc.ChromeOptions()
@@ -40,9 +40,11 @@ def popmart_bot(product_url, email, password):
     # Go to the product page
     driver.get(product_url)
 
-    # Select Victoria Gardens location
+    # Select Pick Up location
+    if not pick_up_location:
+        pick_up_location = "Victoria Gardens POP-UP"
     WebDriverWait(driver, 3).until(
-        EC.element_to_be_clickable((By.XPATH, "//div[text()='South Coast Plaza']"))
+        EC.element_to_be_clickable((By.XPATH, f"//div[text()='{pick_up_location}']"))
     ).click()
     time.sleep(1.2)
 
@@ -50,7 +52,7 @@ def popmart_bot(product_url, email, password):
     add_to_bag_button = driver.find_element(By.XPATH, "//div[contains(@class, 'index_usBtn__UUQYB')]")
     start_time = time.time()
     while add_to_bag_button.text != "ADD TO BAG":
-        if time.time() - start_time > 60:
+        if time.time() - start_time > 600:
             print("⏰ Timeout reached. Exiting loop.")
             driver.quit()
             return False
@@ -101,4 +103,5 @@ if __name__ == "__main__":
     product_url = sys.argv[1]
     email = sys.argv[2]
     password = sys.argv[3]
-    popmart_bot(product_url)
+    pick_up_location = sys.argv[4]
+    popmart_bot(product_url, email, password, pick_up_location)
