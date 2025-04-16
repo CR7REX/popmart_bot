@@ -48,6 +48,9 @@ def popmart_bot(product_url, email, password, pick_up_location=None):
     ).click()
     time.sleep(1.2)
 
+    # Wait for user's input to start
+    input("⏳ Login successful. Press Enter to start...")
+
     # Check the button status
     add_to_bag_button = driver.find_element(By.XPATH, "//div[contains(@class, 'index_usBtn__UUQYB')]")
     start_time = time.time()
